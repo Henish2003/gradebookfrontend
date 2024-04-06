@@ -1,23 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Header from './components/Header';
+import MainBlock from './components/MainBlock';
+import StatisticsBlock from './components/StatisticsBlock';
+import Footer from './components/Footer';
 
 function App() {
+  
+  const [showStatistics, setShowStatistics] = useState(false);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <MainBlock />
+      
+      {showStatistics && <StatisticsBlock />}
+      <button onClick={() => setShowStatistics(!showStatistics)}>
+        {showStatistics ? "Hide Statistics" : "Show Statistics"}
+      </button>
+      <Footer />
     </div>
   );
 }
