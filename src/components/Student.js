@@ -30,7 +30,7 @@ const students = [
     department: "Computer Science" // Add department property
   },
   {
-    id: 3,
+    id: 4,
     name: "Amax",
     ticketNumber: "91012",
     ticketTopic: "Objects",
