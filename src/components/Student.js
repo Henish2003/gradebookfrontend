@@ -1,5 +1,3 @@
-// src/student.js
-
 const students = [
   {
     id: 1,
