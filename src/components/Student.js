@@ -21,7 +21,7 @@ const students = [
   },
   {
     id: 3,
-    name: "Bob Johnson",
+    name: "Amelia",
     ticketNumber: "91011",
     ticketTopic: "Objects",
     examGrade: 3.8,
@@ -29,7 +29,16 @@ const students = [
     comments: "Great job",
     department: "Computer Science" // Add department property
   },
-  // Add more student objects with department property
+  {
+    id: 3,
+    name: "Amax",
+    ticketNumber: "91012",
+    ticketTopic: "Objects",
+    examGrade: 4.8,
+    ratingGrade: 5.2,
+    comments: "Great job",
+    department: "Computer Science"
+  },
 ];
 
 export default students;
