@@ -7,6 +7,8 @@ function StatisticsBlock() {
   const [averageGrade, setAverageGrade] = useState(0);
   const [maxGrade, setMaxGrade] = useState(0);
   const [minGrade, setMinGrade] = useState(0);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResult, setSearchResult] = useState(null);
 
   const calculateStatistics = () => {
     let passCount = 0;
@@ -40,9 +42,18 @@ function StatisticsBlock() {
     setMinGrade(min.toFixed(2));
   };
 
+  const handleSearch = () => {
+    const result = students.find(student => student.name.toLowerCase().includes(searchTerm.toLowerCase()));
+    setSearchResult(result);
+  };
+
   return (
     <div>
       <button onClick={calculateStatistics}>Show Statistics</button>
+      <div>
+        <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder="Search by name" />
+        <button onClick={handleSearch}>Search</button>
+      </div>
       {passPercentage > 0 && failPercentage > 0 && (
         <div>
           <p>Average Pass Percentage: {passPercentage}%</p>
@@ -50,6 +61,15 @@ function StatisticsBlock() {
           <p>Average Grade: {averageGrade}</p>
           <p>Maximum Grade: {maxGrade}</p>
           <p>Minimum Grade: {minGrade}</p>
+        </div>
+      )}
+      {searchResult && (
+        <div>
+          <h3>Search Result:</h3>
+          <p>Name: {searchResult.name}</p>
+          <p>Exam Grade: {searchResult.examGrade}</p>
+          <p>Rating Grade: {searchResult.ratingGrade}</p>
+          <p>Comments: {searchResult.comments}</p>
         </div>
       )}
     </div>

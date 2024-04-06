@@ -1,21 +1,32 @@
-// src/Table.js
-
 import React, { useState } from 'react';
 import students from './Student';
 
 function Table() {
   const [filter, setFilter] = useState('all');
-  const [selectedStudent, setSelectedStudent] = useState(null); // State to hold the selected student
+  const [selectedStudent, setSelectedStudent] = useState(null);
+  const [sortedStudents, setSortedStudents] = useState([...students]);
+  const [sortOption, setSortOption] = useState('name'); // State to track current sorting option
 
   const handleFilterChange = (event) => {
     setFilter(event.target.value);
   };
 
   const handleCommentsClick = (student) => {
-    setSelectedStudent(student); // Set the selected student when Comments button is clicked
+    setSelectedStudent(student);
   };
 
-  const filteredStudents = students.filter(student => {
+  const handleSortBy = (option) => {
+    let sortedData;
+    if (option === 'name') {
+      sortedData = [...sortedStudents].sort((a, b) => a.name.localeCompare(b.name));
+    } else if (option === 'department') {
+      sortedData = [...sortedStudents].sort((a, b) => a.department.localeCompare(b.department));
+    }
+    setSortedStudents(sortedData);
+    setSortOption(option); // Update current sorting option
+  };
+
+  const filteredStudents = sortedStudents.filter(student => {
     const finalGrade = 0.6 * student.examGrade + 0.4 * student.ratingGrade;
     if (filter === 'all') {
       return true;
@@ -37,11 +48,14 @@ function Table() {
           <option value="fail">Fail</option>
         </select>
       </label>
+      <button onClick={() => handleSortBy('name')}>Sort by Name</button> {/* Button to sort by name */}
+      <button onClick={() => handleSortBy('department')}>Sort by Department</button> {/* Button to sort by department */}
       <table>
         <thead>
           <tr>
             <th>№</th>
             <th>Name</th>
+            <th>Department</th>
             <th>Ticket's Number</th>
             <th>Rating Grade</th>
             <th>Exam Grade</th>
@@ -55,20 +69,21 @@ function Table() {
             <tr key={student.id}>
               <td>{index + 1}</td>
               <td>{student.name}</td>
+              <td>{student.department}</td> {/* Display department */}
               <td>{student.ticketNumber}</td>
               <td>{student.ratingGrade}</td>
               <td>{student.examGrade}</td>
               <td>{(0.6 * student.examGrade + 0.4 * student.ratingGrade).toFixed(2)}</td>
               <td>{(0.6 * student.examGrade + 0.4 * student.ratingGrade) >= 4 ? "Passed" : "Failed"}</td>
-              <td><button onClick={() => handleCommentsClick(student)}>Comments</button></td> {/* Changed event handler to handleCommentsClick */}
+              <td><button onClick={() => handleCommentsClick(student)}>Comments</button></td>
             </tr>
           ))}
         </tbody>
       </table>
       {selectedStudent && (
         <div>
-          <h2>Selected Student Comments:</h2> {/* Updated heading */}
-          <p>{selectedStudent.comments}</p> {/* Display comments */}
+          <h2>Selected Student Comments:</h2>
+          <p>{selectedStudent.comments}</p>
         </div>
       )}
     </div>
